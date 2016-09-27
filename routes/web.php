@@ -17,17 +17,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/home', function() {
-    return view('home');
-});
+Route::get('/home', 'HomeController@index');
 
-Route::get('/login', function() {
-    return view('auth.login');
-});
+Route::get('/login', 'LoginController@login');
 
-Route::get('/register', function() {
-    return view('auth.register');
-});
+//Route::get('/register', 'RegisterController@register');
 
 //var hola = function hola () {
 //    echo "hola!";
