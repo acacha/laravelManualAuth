@@ -11,6 +11,30 @@
 |
 */
 
+//Closures : funcions anomins
+//
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/home', function() {
+    return view('home');
+});
+
+Route::get('/login', function() {
+    return view('auth.login');
+});
+
+Route::get('/register', function() {
+    return view('auth.register');
+});
+
+//var hola = function hola () {
+//    echo "hola!";
+//}
+//
+//Route::get('/hola', hola );
+
+//class Route {
+//    public static function get($uri, )
+//}
