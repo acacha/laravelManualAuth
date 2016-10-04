@@ -178,6 +178,15 @@ return [
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
 
+        /*
+         * Acacha Llum Service Providers...
+         *
+         * See: https://github.com/acacha/llum
+         */
+        Barryvdh\LaravelIdeHelper\IdeHelperServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
+        #llum_providers
+
     ],
 
     /*
@@ -225,6 +234,14 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
+
+        /*
+         * Acacha Llum Aliases...
+         *
+         * See: https://github.com/acacha/llum
+         */
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        #llum_aliases
 
     ],
 
