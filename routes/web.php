@@ -22,13 +22,3 @@ Route::get('/home', 'HomeController@index');
 Route::get('/login', 'LoginController@login');
 
 //Route::get('/register', 'RegisterController@register');
-
-//var hola = function hola () {
-//    echo "hola!";
-//}
-//
-//Route::get('/hola', hola );
-
-//class Route {
-//    public static function get($uri, )
-//}
