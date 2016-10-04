@@ -10,28 +10,26 @@ use App\Http\Requests;
 
 class HomeController extends Controller
 {
+
+    /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
     public function index()
     {
+        //S SOLID
+        //SRP: Single Responsability Principle
         //Passos controlador bàsic (glue/cola del model i vista):
         // 1) Aconseguir informació de l'usuari de la base de dades
         // 2) Mostrar vista home passant info del usuari
-
-//        Auth::loginUsingId(1);
-//        Auth::logout();
-
-        // Middleware
-
-        if (Auth::check()) {
-            $user = User::find(1);
-            return view('home')
-                ->withUser($user);
-        }else {
-            $user = new \stdClass();
-            $user->name = "Invitado";
-            return view('home')
-                ->withUser($user);
-        }
-
-
+        $user = Auth::user();
+        return view('home')
+            ->withUser($user);
     }
 }
