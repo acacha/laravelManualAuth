@@ -11,16 +11,6 @@ use App\Http\Requests;
 class HomeController extends Controller
 {
 
-    /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     public function index()
     {
         //S SOLID
@@ -28,8 +18,34 @@ class HomeController extends Controller
         //Passos controlador bàsic (glue/cola del model i vista):
         // 1) Aconseguir informació de l'usuari de la base de dades
         // 2) Mostrar vista home passant info del usuari
-        $user = Auth::user();
-        return view('home')
-            ->withUser($user);
+
+        //ESTAT SESSIÓ
+        if ($this->userIsAuthenticated()) {
+            $user = $this->getUser();
+            return view('home')
+                ->withUser($user);
+        } else {
+            return redirect('login');
+        }
+
+//        '{"name" : "Sergi","sn1" : "Tur"}'
+
+    }
+
+    private function getUser()
+    {
+        //Opció 1 : query string $_GET
+        $id = $_GET['user'];
+        return User::findOrFail($id);
+    }
+
+    private function userIsAuthenticated()
+    {
+
+        if(isset($_GET['user'])) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }
