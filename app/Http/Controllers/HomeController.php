@@ -19,6 +19,8 @@ class HomeController extends Controller
         // 1) Aconseguir informació de l'usuari de la base de dades
         // 2) Mostrar vista home passant info del usuari
 
+        $this->setUserCookie();
+
         //ESTAT SESSIÓ
         if ($this->userIsAuthenticated()) {
             $user = $this->getUser();
@@ -32,17 +34,23 @@ class HomeController extends Controller
 
     }
 
+
+    private function setUserCookie() {
+        $user = User::find(1);
+        setcookie('user',json_encode($user));
+    }
+
     private function getUser()
     {
         //Opció 1 : query string $_GET
-        $id = $_GET['user'];
-        return User::findOrFail($id);
+        $user = json_decode($_COOKIE['user']);
+        return $user;
     }
 
     private function userIsAuthenticated()
     {
 
-        if(isset($_GET['user'])) {
+        if(isset($_COOKIE['user'])) {
             return true;
         } else {
             return false;
