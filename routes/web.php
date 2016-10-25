@@ -13,14 +13,24 @@
 
 //Closures : funcions anomins
 //
+use App\User;
+
 Route::get('/', function () {
     return view('welcome');
 });
+
+//$user = User::findOrFail(1);
+//setcookie('user',$user->token);
+
 
 Route::group(['middleware' => 'manualauth'], function () {
     Route::get('/tasques', function () {
         return view('tasques');
     });
+});
+
+Route::get('/login', function () {
+    return view('login');
 });
 
 //PAS 1? Middleware? Com protegir pàgines?
