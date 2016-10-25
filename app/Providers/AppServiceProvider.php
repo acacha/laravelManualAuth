@@ -20,6 +20,11 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(
             \App\ManualAuth\Guard::class, \App\ManualAuth\CookieGuard::class
         );
+
+        $this->app->bind(
+            \App\ManualAuth\UserProvider::class, \App\ManualAuth\EloquentUserProvider::class
+        );
+
     }
 
     /**

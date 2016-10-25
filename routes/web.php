@@ -11,8 +11,6 @@
 |
 */
 
-//Closures : funcions anomins
-//
 use App\User;
 
 Route::get('/', function () {
@@ -29,9 +27,8 @@ Route::group(['middleware' => 'manualauth'], function () {
     });
 });
 
-Route::get('/login', function () {
-    return view('login');
-});
+Route::get('/login', 'LoginController@showLoginForm');
+Route::post('/login', 'LoginController@login');
 
 //PAS 1? Middleware? Com protegir pàgines?
 
@@ -43,3 +40,5 @@ Route::get('/login', function () {
 //Route::post('/login', 'LoginController@login');
 //
 ////Route::get('/register', 'RegisterController@register');
+
+//PAS 2? User Providers Login /Register

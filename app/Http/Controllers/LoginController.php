@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Auth\Managers\AuthManager;
+use App\ManualAuth\Guard;
 use App\User;
 use Hash;
 use Illuminate\Http\Request;
@@ -12,29 +13,60 @@ use App\Http\Requests;
 class LoginController extends Controller
 {
 
-    public $auth;
 
-    public $username = "email";
+//    public $username = "email";
+
+    protected $guard;
 
     /**
      * LoginController constructor.
-     * @param $auth
+     * @param $guard
      */
-    public function __construct(AuthManager $auth)
+    public function __construct(Guard $guard)
     {
-        $this->auth = $auth;
+        $this->guard = $guard;
     }
+
 
     public function showLoginForm()
     {
-//        dd(app('auth'));
-//        dd(\Auth::guard());
         return view('auth.login');
     }
 
     // DEPENDENCY INJECTION
     public function login(Request $request)
     {
+        $this->validateLogin($request);
+
+        $credentials = $request->only(['email','password']);
+
+        if ($this->guard->validate($credentials)) {
+            //OK TODO
+            $this->guard->setUser();
+            return redirect('home');
+        }
+
+        return redirect('login');
+
+//        $this->validate($request, [
+//            'email' => 'required', 'password' => 'required',
+//        ]);
+
+        // Validate login form -> Required fields, response with errors, etc
+
+
+
+        // Check too many attempts TODO
+
+        // Delegar intent de autenticació a un altre i tenir en compte que poden
+        // haver-hi diferents User Providers (SQL, Ldap...)
+        //
+        // OK ->
+        //    CookieGuard / ParameterGuard o que!
+        //    Redirect to home
+        // NOT OK -> Redirect to login with error messages
+
+    }
 
         //Validate Login Request (required fields, reponse with errors, etc)
         // Here or validate to Custom Request
@@ -46,7 +78,7 @@ class LoginController extends Controller
         // Ok-> Redirect to login
         // Not ok -> 1) Increment login attempts 2) Return error response
 
-        $this->auth->guard()->validate($this->credentials($request));
+//        $this->auth->guard()->validate($this->credentials($request));
 
 
 //        try {
@@ -70,7 +102,7 @@ class LoginController extends Controller
         // ERROR   -> RETURN TO LOGIN PAGE
         // CORRECT -> REDIRECT TO HOME
 //        echo "El login se procesa aquí";
-    }
+//    }
 
     /**
      * Get the needed authorization credentials from the request.
@@ -91,5 +123,12 @@ class LoginController extends Controller
     public function username()
     {
         return $this->username;
+    }
+
+    private function validateLogin($request)
+    {
+        $this->validate($request, [
+            'email' => 'email|required', 'password' => 'required',
+        ]);
     }
 }
