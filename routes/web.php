@@ -17,11 +17,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Auth::loginUsingId(4);
-Auth::logout();
+Route::group(['middleware' => 'manualauth'], function () {
+    Route::get('/tasques', function () {
+        return view('tasques');
+    });
+});
 
-Route::get('/home', 'HomeController@index');
-Route::get('/login', 'LoginController@showLoginForm');
-Route::post('/login', 'LoginController@login');
+//PAS 1? Middleware? Com protegir pàgines?
 
-//Route::get('/register', 'RegisterController@register');
+////Auth::loginUsingId(4);
+//Auth::logout();
+//
+//Route::get('/home', 'HomeController@index');
+//Route::get('/login', 'LoginController@showLoginForm');
+//Route::post('/login', 'LoginController@login');
+//
+////Route::get('/register', 'RegisterController@register');
