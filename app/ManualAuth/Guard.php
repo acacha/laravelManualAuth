@@ -1,10 +1,4 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: sergi
- * Date: 25/10/16
- * Time: 20:33
- */
 
 namespace App\ManualAuth;
 
