@@ -18,12 +18,6 @@ class HomeController extends Controller
 
     }
 
-
-    private function setUserCookie() {
-        $user = User::findOrFail(1);;
-        setcookie('user',$user->token);
-    }
-
     private function getUser()
     {
         //Opció 1 : query string $_GET
